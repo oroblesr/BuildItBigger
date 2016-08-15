@@ -10,8 +10,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ProgressBar;
 
+import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.InterstitialAd;
 
 
 /**
@@ -20,8 +22,25 @@ import com.google.android.gms.ads.AdView;
 public class MainActivityFragment extends Fragment {
     private ProgressBar spinner;
     private Button buttonTellJoke;
+    private InterstitialAd mInterstitialAd;
 
-    public MainActivityFragment() {
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        mInterstitialAd = new InterstitialAd(getContext());
+        mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
+
+        mInterstitialAd.setAdListener(new AdListener() {
+            @Override
+            public void onAdClosed() {
+                requestNewInterstitial();
+                showJoke();
+            }
+        });
+
+        requestNewInterstitial();
+
     }
 
     @Override
@@ -55,12 +74,27 @@ public class MainActivityFragment extends Fragment {
         @Override
         public void onClick(View view) {
             spinner.setVisibility(View.VISIBLE);
-
-            new JokeEndpointsAsyncTask().execute(new Pair<Context, String>(getContext(), "Free"));
-
+            if (mInterstitialAd.isLoaded()) {
+                mInterstitialAd.show();
+            } else {
+                showJoke();
+            }
         }
     };
 
+
+    private void showJoke(){
+        new JokeEndpointsAsyncTask().execute(new Pair<Context, String>(getContext(), "Free"));
+    }
+
+
+    private void requestNewInterstitial() {
+        AdRequest adRequest = new AdRequest.Builder()
+                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+                .build();
+
+        mInterstitialAd.loadAd(adRequest);
+    }
 
 
 }
