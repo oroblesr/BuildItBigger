@@ -16,20 +16,12 @@ import com.oroblesr.displayjokeslibrary.DisplayActivity;
 
 
 public class MainActivity extends ActionBarActivity {
-    private ProgressBar spinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        spinner = (ProgressBar)findViewById(R.id.progressBar);
-        spinner.setVisibility(View.GONE);
-    }
 
-    @Override
-    public void onPause(){
-        super.onPause();
-        spinner.setVisibility(View.GONE);
     }
 
     @Override
@@ -52,15 +44,6 @@ public class MainActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-
-
-    public void tellJoke(View view){
-
-        spinner.setVisibility(View.VISIBLE);
-
-        new JokeEndpointsAsyncTask().execute(new Pair<Context, String>(this, "Manfred"));
     }
 
 
