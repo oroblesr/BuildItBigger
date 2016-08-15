@@ -23,6 +23,7 @@ import java.io.IOException;
 class JokeEndpointsAsyncTask extends AsyncTask<Pair<Context, String>, Void, String> {
     private static MyApi myApiService = null;
     private Context context;
+    private String name;
 
     @Override
     protected String doInBackground(Pair<Context, String>... params) {
@@ -45,7 +46,7 @@ class JokeEndpointsAsyncTask extends AsyncTask<Pair<Context, String>, Void, Stri
         }
 
         context = params[0].first;
-        String name = params[0].second;
+        name = params[0].second;
 
         try {
             return myApiService.sayHi(name).execute().getJoke();
@@ -56,7 +57,7 @@ class JokeEndpointsAsyncTask extends AsyncTask<Pair<Context, String>, Void, Stri
 
     @Override
     protected void onPostExecute(String result) {
-        Toast.makeText(context, result, Toast.LENGTH_LONG).show();
+        Toast.makeText(context, result + " " + name, Toast.LENGTH_LONG).show();
 
         Intent intent = new Intent(context, DisplayActivity.class);
         intent.putExtra("joke",result);

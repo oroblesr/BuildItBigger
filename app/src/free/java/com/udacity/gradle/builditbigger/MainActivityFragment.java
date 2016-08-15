@@ -56,7 +56,7 @@ public class MainActivityFragment extends Fragment {
         public void onClick(View view) {
             spinner.setVisibility(View.VISIBLE);
 
-            new JokeEndpointsAsyncTask().execute(new Pair<Context, String>(getContext(), "Manfred"));
+            new JokeEndpointsAsyncTask().execute(new Pair<Context, String>(getContext(), "Free"));
 
         }
     };
