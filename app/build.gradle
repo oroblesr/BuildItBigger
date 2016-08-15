@@ -32,9 +32,10 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile project(':javaJokesLib')
     compile project(':displayJokesLibrary')
-    // Added for AdMob
+
     compile project(path: ':jokesBackend', configuration: 'android-endpoints')
     compile 'com.android.support:appcompat-v7:24.1.1'
-    compile 'com.google.android.gms:play-services:9.4.0'
+
     compile 'com.android.support:support-v4:24.1.1'
+    freeCompile  'com.google.android.gms:play-services:9.4.0'
 }
