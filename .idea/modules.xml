@@ -5,7 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/BuildItBigger.iml" filepath="$PROJECT_DIR$/BuildItBigger.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/displayJokesLibrary/displayJokesLibrary.iml" filepath="$PROJECT_DIR$/displayJokesLibrary/displayJokesLibrary.iml" />
-      <module fileurl="file://$PROJECT_DIR$/javaJokesLib/javajokeslib.iml" filepath="$PROJECT_DIR$/javaJokesLib/javajokeslib.iml" />
+      <module fileurl="file://$PROJECT_DIR$/javaJokesLib/javaJokesLib.iml" filepath="$PROJECT_DIR$/javaJokesLib/javaJokesLib.iml" />
       <module fileurl="file://$PROJECT_DIR$/jokesBackend/jokesBackend.iml" filepath="$PROJECT_DIR$/jokesBackend/jokesBackend.iml" />
     </modules>
   </component>
