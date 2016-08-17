@@ -6,21 +6,16 @@ import com.example.JavaJokes;
 public class MyBean {
 
     private JavaJokes javaJokes;
-    private String myData;
 
     MyBean(){
         javaJokes = new JavaJokes();
     }
 
-    public String getData() {
-        return myData;
+    public String getRandJoke() {
+        return javaJokes.getRandJoke();
     }
 
-    public void setData(String data) {
-        myData = data;
-    }
-
-    public String getJoke() {
-        return javaJokes.getJoke();
+    public String getJoke(int selectedJoke) {
+        return javaJokes.getJoke(selectedJoke);
     }
 }

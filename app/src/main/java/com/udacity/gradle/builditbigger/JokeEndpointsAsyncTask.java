@@ -20,13 +20,13 @@ import java.io.IOException;
  * Snippet by https://github.com/GoogleCloudPlatform/gradle-appengine-templates/tree/master/HelloEndpoints
  */
 
-class JokeEndpointsAsyncTask extends AsyncTask<Pair<Context, String>, Void, String> {
+class JokeEndpointsAsyncTask extends AsyncTask<Pair<Context, Integer>, Void, String> {
     private static MyApi myApiService = null;
     private Context context;
-    private String name;
+    private int operation;
 
     @Override
-    protected String doInBackground(Pair<Context, String>... params) {
+    protected String doInBackground(Pair<Context, Integer>... params) {
         if(myApiService == null) {  // Only do this once
             MyApi.Builder builder = new MyApi.Builder(AndroidHttp.newCompatibleTransport(),
                     new AndroidJsonFactory(), null)
@@ -46,10 +46,10 @@ class JokeEndpointsAsyncTask extends AsyncTask<Pair<Context, String>, Void, Stri
         }
 
         context = params[0].first;
-        name = params[0].second;
+        operation = params[0].second;
 
         try {
-            return myApiService.sayHi(name).execute().getJoke();
+            return myApiService.jokeEndpoint().execute().getRandJoke();
         } catch (IOException e) {
             return e.getMessage();
         }
@@ -57,11 +57,17 @@ class JokeEndpointsAsyncTask extends AsyncTask<Pair<Context, String>, Void, Stri
 
     @Override
     protected void onPostExecute(String result) {
-        Toast.makeText(context, result + " " + name, Toast.LENGTH_LONG).show();
 
-        Intent intent = new Intent(context, DisplayActivity.class);
-        intent.putExtra("joke",result);
+        if (result != null){
+            if (result.equals("timeout")) {
+                Toast.makeText(context, "Not able to contact the server", Toast.LENGTH_LONG).show();
+            }
+            else{
+                Intent intent = new Intent(context, DisplayActivity.class);
+                intent.putExtra("joke", result);
+                context.startActivity(intent);
+            }
+        }
 
-        context.startActivity(intent);
     }
 }

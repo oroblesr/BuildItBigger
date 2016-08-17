@@ -84,7 +84,7 @@ public class MainActivityFragment extends Fragment {
 
 
     private void showJoke(){
-        new JokeEndpointsAsyncTask().execute(new Pair<Context, String>(getContext(), "Free"));
+        new JokeEndpointsAsyncTask().execute(new Pair<Context, Integer>(getContext(), -1));
     }
 
 
