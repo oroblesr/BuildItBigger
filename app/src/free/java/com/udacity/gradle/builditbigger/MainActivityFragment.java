@@ -1,6 +1,7 @@
 package com.udacity.gradle.builditbigger;
 
 import android.content.Context;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.util.Pair;
@@ -9,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
@@ -23,6 +25,7 @@ public class MainActivityFragment extends Fragment {
     private ProgressBar spinner;
     private Button buttonTellJoke;
     private InterstitialAd mInterstitialAd;
+    private JokeEndpointsAsyncTask mAsyncTask;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -65,6 +68,16 @@ public class MainActivityFragment extends Fragment {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        if (mAsyncTask != null){
+            if (mAsyncTask.getStatus() == AsyncTask.Status.RUNNING ) {
+                spinner.setVisibility(View.VISIBLE);
+            }
+        }
+    }
+
+    @Override
     public void onPause(){
         super.onPause();
         spinner.setVisibility(View.GONE);
@@ -84,7 +97,13 @@ public class MainActivityFragment extends Fragment {
 
 
     private void showJoke(){
-        new JokeEndpointsAsyncTask().execute(new Pair<Context, Integer>(getContext(), -1));
+        if (mAsyncTask != null && mAsyncTask.getStatus() == AsyncTask.Status.RUNNING) {
+            Toast.makeText(getContext(), R.string.getting_joke, Toast.LENGTH_SHORT).show();
+        }
+        else {
+            mAsyncTask = new JokeEndpointsAsyncTask();
+            mAsyncTask.execute(new Pair<Context, Integer>(getContext(), -1));
+        }
     }
 
 

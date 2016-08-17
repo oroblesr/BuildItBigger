@@ -18,6 +18,8 @@ import android.widget.ProgressBar;
 public class MainActivityFragment extends Fragment {
     private ProgressBar spinner;
     private Button buttonTellJoke;
+    private JokeEndpointsAsyncTask mAsyncTask;
+
 
     public MainActivityFragment() {
     }
@@ -46,7 +48,13 @@ public class MainActivityFragment extends Fragment {
         public void onClick(View view) {
             spinner.setVisibility(View.VISIBLE);
 
-            new JokeEndpointsAsyncTask().execute(new Pair<Context, Integer>(getContext(), -1));
+            if (mAsyncTask != null && mAsyncTask.getStatus() == AsyncTask.Status.RUNNING) {
+                Toast.makeText(getContext(), R.string.getting_joke, Toast.LENGTH_SHORT).show();
+            }
+            else {
+                mAsyncTask = new JokeEndpointsAsyncTask();
+                mAsyncTask.execute(new Pair<Context, Integer>(getContext(), -1));
+            }
 
         }
     };
