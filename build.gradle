@@ -19,11 +19,32 @@ allprojects {
 }
 
 
+task taskX << {
+    println 'taskX'
+}
+task taskY << {
+    println 'taskY'
+}
+
+
 task startServerAndTest(dependsOn:
-        [":jokesBackend:appengineRun",
-         ":app:connectedAndroidTest",
-         ":jokesBackend:appengineStop"]) {
+        ['startGCE', 'jokeTests', 'stopGCE']) {
+    evaluationDependsOn ':jokesBackend'
+    project(':jokesBackend') {
+        appengine {
+            daemon true
+        }
+    }
     doLast {
-        printLn "Testing completed"
+        println "Testing completed"
     }
 }
+
+task startGCE(dependsOn: ':jokesBackend:appengineRun')
+
+task jokeTests(dependsOn: ['startGCE', ':app:connectedAndroidTest'])
+jokeTests.mustRunAfter('startGCE')
+
+task stopGCE(dependsOn: ['jokeTests', ':jokesBackend:appengineStop'])
+stopGCE.mustRunAfter('jokeTests')
+
