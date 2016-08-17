@@ -24,6 +24,7 @@ class JokeEndpointsAsyncTask extends AsyncTask<Pair<Context, Integer>, Void, Str
     private static MyApi myApiService = null;
     private Context context;
     private int operation;
+    private String intentKey = "joke";
 
     @Override
     protected String doInBackground(Pair<Context, Integer>... params) {
@@ -59,12 +60,12 @@ class JokeEndpointsAsyncTask extends AsyncTask<Pair<Context, Integer>, Void, Str
     protected void onPostExecute(String result) {
 
         if (result != null){
-            if (result.equals("timeout")) {
-                Toast.makeText(context, "Not able to contact the server", Toast.LENGTH_LONG).show();
+            if (result.equals(context.getString(R.string.timeout))) {
+                Toast.makeText(context, R.string.unable_to_contact_server, Toast.LENGTH_LONG).show();
             }
             else{
                 Intent intent = new Intent(context, DisplayActivity.class);
-                intent.putExtra("joke", result);
+                intent.putExtra(intentKey, result);
                 context.startActivity(intent);
             }
         }

@@ -5,4 +5,6 @@
     <string name="action_settings">Settings</string>
     <string name="banner_ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>
     <string name="getting_joke">A delicious joke is already on the way</string>
+    <string name="unable_to_contact_server">Not able to contact the server</string>
+    <string name="timeout">timeout</string>
 </resources>
