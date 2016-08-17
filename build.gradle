@@ -17,3 +17,13 @@ allprojects {
         jcenter()
     }
 }
+
+
+task startServerAndTest(dependsOn:
+        [":jokesBackend:appengineRun",
+         ":app:connectedAndroidTest",
+         ":jokesBackend:appengineStop"]) {
+    doLast {
+        printLn "Testing completed"
+    }
+}
